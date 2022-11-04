@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.446f333a.chunk.css",
-    "main.js": "/static/js/main.093faef2.chunk.js",
-    "main.js.map": "/static/js/main.093faef2.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.dbcfb07f.js",
-    "runtime-main.js.map": "/static/js/runtime-main.dbcfb07f.js.map",
-    "static/js/2.f1c8849f.chunk.js": "/static/js/2.f1c8849f.chunk.js",
-    "static/js/2.f1c8849f.chunk.js.map": "/static/js/2.f1c8849f.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.446f333a.chunk.css.map": "/static/css/main.446f333a.chunk.css.map",
-    "static/js/2.f1c8849f.chunk.js.LICENSE.txt": "/static/js/2.f1c8849f.chunk.js.LICENSE.txt"
+    "main.css": "./15custom-hooks-ealistic/static/css/main.446f333a.chunk.css",
+    "main.js": "./15custom-hooks-ealistic/static/js/main.093faef2.chunk.js",
+    "main.js.map": "./15custom-hooks-ealistic/static/js/main.093faef2.chunk.js.map",
+    "runtime-main.js": "./15custom-hooks-ealistic/static/js/runtime-main.5c80b189.js",
+    "runtime-main.js.map": "./15custom-hooks-ealistic/static/js/runtime-main.5c80b189.js.map",
+    "static/js/2.f1c8849f.chunk.js": "./15custom-hooks-ealistic/static/js/2.f1c8849f.chunk.js",
+    "static/js/2.f1c8849f.chunk.js.map": "./15custom-hooks-ealistic/static/js/2.f1c8849f.chunk.js.map",
+    "index.html": "./15custom-hooks-ealistic/index.html",
+    "static/css/main.446f333a.chunk.css.map": "./15custom-hooks-ealistic/static/css/main.446f333a.chunk.css.map",
+    "static/js/2.f1c8849f.chunk.js.LICENSE.txt": "./15custom-hooks-ealistic/static/js/2.f1c8849f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.dbcfb07f.js",
+    "static/js/runtime-main.5c80b189.js",
     "static/js/2.f1c8849f.chunk.js",
     "static/css/main.446f333a.chunk.css",
     "static/js/main.093faef2.chunk.js"
