@@ -4,37 +4,36 @@ import useHttp from '../../hooks/use-http';
 import Section from '../UI/Section';
 import EditTaskForm from './EditTaskForm';
 
-const EditTask = ({onAddTask}) => {
+const EditTask = ({onEditTask, task}) => {
   const {isLoading, error, sendRequest: editTask} = useHttp();
+  const {text, id} = task;
+  debugger;
 
-  const tranformTask = useCallback(
-    (taskText, taskObj) => {
-      const generatedId = taskObj.name; // firebase-specific => "name" contains generated id
-      const createdTask = {id: generatedId, text: taskText};
+  const tranformTask = useCallback(() => {
+    onEditTask();
+  }, [onEditTask]);
 
-      onAddTask(createdTask);
-    },
-    [onAddTask],
-  );
-
-  const enterTaskHandler = async (taskText) => {
+  const handleTaskEnter = async (taskText) => {
     editTask(
       {
-        url: 'https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks.json',
-        method: 'POST',
+        url: `https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks/${id}.json`,
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: {text: taskText},
       },
-      // preconfigure the function
-      tranformTask.bind(null, taskText),
+      tranformTask,
     );
   };
 
   return (
     <Section>
-      <EditTaskForm onEnterTask={enterTaskHandler} loading={isLoading} />
+      <EditTaskForm
+        onEnterTask={handleTaskEnter}
+        loading={isLoading}
+        editText={text}
+      />
       {error && <p>{error}</p>}
     </Section>
   );

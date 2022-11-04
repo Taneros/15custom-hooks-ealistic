@@ -1,14 +1,18 @@
-import {useRef} from 'react';
+import {useRef, useEffect} from 'react';
 
 import classes from './EditTaskForm.module.css';
 
-const EditTaskForm = ({onEnterTask, loading}) => {
-  const taskInputRef = useRef();
+const EditTaskForm = ({onEnterTask, loading, editText}) => {
+  const taskInputRef = useRef(null);
+
+  useEffect(() => {
+    if (taskInputRef?.current) taskInputRef.current.value = editText;
+  }, []);
 
   const submitHandler = (event) => {
     event.preventDefault();
 
-    const enteredValue = taskInputRef.current.value;
+    const enteredValue = taskInputRef?.current.value;
 
     if (enteredValue.trim().length > 0) {
       onEnterTask(enteredValue);
@@ -20,7 +24,7 @@ const EditTaskForm = ({onEnterTask, loading}) => {
   return (
     <form className={classes.form} onSubmit={submitHandler}>
       <input type="text" ref={taskInputRef} />
-      <button>{loading ? 'Sending...' : 'Add Task'}</button>
+      <button>{loading ? 'Sending...' : 'Edit Task'}</button>
     </form>
   );
 };

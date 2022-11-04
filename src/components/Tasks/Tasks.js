@@ -13,7 +13,7 @@ const Tasks = (props) => {
             {task.text}
             <div>
               <button onClick={() => props.onDelete(task.id)}>Delete</button>
-              <button onClick={() => props.onEdit(task.id, '!!!')}>Edit</button>
+              <button onClick={() => props.onEdit(task.id)}>Edit</button>
             </div>
           </TaskItem>
         ))}

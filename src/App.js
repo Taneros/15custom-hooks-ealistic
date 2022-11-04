@@ -10,6 +10,10 @@ export const url =
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [isEdit, setIsEdit] = useState(() => ({
+    edit: false,
+    task: {id: '', text: ''},
+  }));
 
   const {isLoading, error, sendRequest} = useHttp();
 
@@ -23,7 +27,7 @@ function App() {
     setTasks(loadedTasks);
   }, []);
 
-  const fetchTasks = () => {
+  const handleFetchTasks = () => {
     sendRequest(
       {
         url,
@@ -33,14 +37,25 @@ function App() {
   };
 
   useEffect(() => {
-    fetchTasks();
+    handleFetchTasks();
   }, []);
 
-  const taskAddHandler = useCallback((task) => {
+  const onAddTask = useCallback((task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
   }, []);
 
-  const onDelete = (id) => {
+  const handleSubmitEdit = () => {
+    handleFetchTasks();
+    setIsEdit({edit: false, task: null});
+  };
+
+  const handleEditTask = (id) => {
+    const task = tasks.find((task) => task.id === id);
+    setIsEdit({edit: true, task});
+    debugger;
+  };
+
+  const handleDeleteTask = (id) => {
     sendRequest(
       {
         url: `https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks/${id}.json`,
@@ -53,33 +68,21 @@ function App() {
     );
   };
 
-  const onEdit = (id, text) => {
-    sendRequest(
-      {
-        url: `https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks/${id}.json`,
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: {text},
-      },
-      () => fetchTasks(),
-    );
-  };
-
   return (
-    <React.Fragment>
-      <NewTask onAddTask={taskAddHandler} />
-      <EditTask onEditTask={}/>
+    <>
+      {!isEdit.edit && <NewTask onAddTask={onAddTask} />}
+      {isEdit.edit && (
+        <EditTask onEditTask={handleSubmitEdit} task={isEdit.task} />
+      )}
       <Tasks
         items={tasks}
         loading={isLoading}
         error={error}
-        onFetch={fetchTasks}
-        onDelete={onDelete}
-        onEdit={onEdit}
+        onFetch={handleFetchTasks}
+        onDelete={handleDeleteTask}
+        onEdit={handleEditTask}
       />
-    </React.Fragment>
+    </>
   );
 }
 
