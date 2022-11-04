@@ -20,6 +20,7 @@ const useHttp = () => {
 
       applyData(await response.json());
     } catch (err) {
+      debugger;
       setError(err.message || 'Something went wrong!');
     }
     setIsLoading(false);

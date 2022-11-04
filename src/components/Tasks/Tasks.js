@@ -9,7 +9,10 @@ const Tasks = (props) => {
     taskList = (
       <ul>
         {props.items.map((task) => (
-          <TaskItem key={task.id}>{task.text}</TaskItem>
+          <TaskItem key={task.id}>
+            {task.text}
+            <button onClick={() => props.onDelete(task.id)}>Delete</button>
+          </TaskItem>
         ))}
       </ul>
     );
@@ -18,7 +21,7 @@ const Tasks = (props) => {
   let content = taskList;
 
   if (props.error) {
-    content = <button onClick={props.onFetch}>Try again</button>;
+    content = <button onClick={props.onFetch}>{`Try again`}</button>;
   }
 
   if (props.loading) {

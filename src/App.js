@@ -4,6 +4,9 @@ import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
 import useHttp from './hooks/use-http';
 
+export const url =
+  'https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks.json';
+
 function App() {
   const [tasks, setTasks] = useState([]);
 
@@ -22,7 +25,7 @@ function App() {
   useEffect(() => {
     fetchTasks(
       {
-        url: 'https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks.json',
+        url,
       },
       transformTask,
     );
@@ -32,6 +35,19 @@ function App() {
     setTasks((prevTasks) => prevTasks.concat(task));
   }, []);
 
+  const onDelete = (id) => {
+    fetchTasks(
+      {
+        url: `https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks/${id}.json`,
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+      () => setTasks((tasks) => tasks.filter((item) => item.id !== id)),
+    );
+  };
+
   return (
     <React.Fragment>
       <NewTask onAddTask={taskAddHandler} />
@@ -40,6 +56,7 @@ function App() {
         loading={isLoading}
         error={error}
         onFetch={fetchTasks}
+        onDelete={onDelete}
       />
     </React.Fragment>
   );

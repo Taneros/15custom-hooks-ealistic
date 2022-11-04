@@ -12,6 +12,8 @@ const TaskForm = ({onEnterTask, loading}) => {
 
     if (enteredValue.trim().length > 0) {
       onEnterTask(enteredValue);
+      taskInputRef.current.value = '';
+      taskInputRef.current.focus();
     }
   };
 
