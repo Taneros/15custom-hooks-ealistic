@@ -3,6 +3,7 @@ import React, {useEffect, useState, useCallback} from 'react';
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
 import useHttp from './hooks/use-http';
+import EditTask from './components/EditTask/EditTask';
 
 export const url =
   'https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks.json';
@@ -10,7 +11,7 @@ export const url =
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const {isLoading, error, sendRequest: fetchTasks} = useHttp();
+  const {isLoading, error, sendRequest} = useHttp();
 
   const transformTask = useCallback((taskObj) => {
     const loadedTasks = [];
@@ -22,13 +23,17 @@ function App() {
     setTasks(loadedTasks);
   }, []);
 
-  useEffect(() => {
-    fetchTasks(
+  const fetchTasks = () => {
+    sendRequest(
       {
         url,
       },
       transformTask,
     );
+  };
+
+  useEffect(() => {
+    fetchTasks();
   }, []);
 
   const taskAddHandler = useCallback((task) => {
@@ -36,7 +41,7 @@ function App() {
   }, []);
 
   const onDelete = (id) => {
-    fetchTasks(
+    sendRequest(
       {
         url: `https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks/${id}.json`,
         method: 'DELETE',
@@ -48,15 +53,31 @@ function App() {
     );
   };
 
+  const onEdit = (id, text) => {
+    sendRequest(
+      {
+        url: `https://custom-hooks-113a5-default-rtdb.europe-west1.firebasedatabase.app/tasks/${id}.json`,
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {text},
+      },
+      () => fetchTasks(),
+    );
+  };
+
   return (
     <React.Fragment>
       <NewTask onAddTask={taskAddHandler} />
+      <EditTask onEditTask={}/>
       <Tasks
         items={tasks}
         loading={isLoading}
         error={error}
         onFetch={fetchTasks}
         onDelete={onDelete}
+        onEdit={onEdit}
       />
     </React.Fragment>
   );

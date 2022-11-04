@@ -11,7 +11,10 @@ const Tasks = (props) => {
         {props.items.map((task) => (
           <TaskItem key={task.id}>
             {task.text}
-            <button onClick={() => props.onDelete(task.id)}>Delete</button>
+            <div>
+              <button onClick={() => props.onDelete(task.id)}>Delete</button>
+              <button onClick={() => props.onEdit(task.id, '!!!')}>Edit</button>
+            </div>
           </TaskItem>
         ))}
       </ul>
